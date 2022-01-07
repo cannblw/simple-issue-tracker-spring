@@ -4,7 +4,9 @@ import com.edgarchirivella.simpleissuetracker.mappers.DeveloperMapper;
 import com.edgarchirivella.simpleissuetracker.services.DeveloperService;
 import com.edgarchirivella.simpleissuetracker.dto.actions.CreateDeveloperAction;
 import com.edgarchirivella.simpleissuetracker.dto.details.DeveloperDetails;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -27,6 +29,18 @@ public class DeveloperController {
 
         return _developerMapper.toDto(developers);
     }
+
+    @GetMapping("/{id}")
+    public DeveloperDetails GetById(@PathVariable Long id) {
+        var developer = _developerService.FindById(id);
+
+        if (developer.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
+        return _developerMapper.toDto(developer.get());
+    }
+
 
     @PostMapping
     public DeveloperDetails CreateDeveloper(@RequestBody CreateDeveloperAction action) {

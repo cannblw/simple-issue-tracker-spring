@@ -5,6 +5,7 @@ import com.edgarchirivella.simpleissuetracker.repositories.DeveloperRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DeveloperService {
@@ -16,6 +17,10 @@ public class DeveloperService {
 
     public List<Developer> FindAll() {
         return _developerRepository.findAll();
+    }
+
+    public Optional<Developer> FindById(Long id) {
+        return _developerRepository.findById(id);
     }
 
     public Developer CreateDeveloper(String name) {
