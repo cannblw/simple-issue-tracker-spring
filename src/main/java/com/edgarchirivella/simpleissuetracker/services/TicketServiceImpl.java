@@ -3,6 +3,7 @@ package com.edgarchirivella.simpleissuetracker.services;
 import com.edgarchirivella.simpleissuetracker.domain.Story;
 import com.edgarchirivella.simpleissuetracker.domain.StoryStatus;
 import com.edgarchirivella.simpleissuetracker.domain.Ticket;
+import com.edgarchirivella.simpleissuetracker.exceptions.EntityNotFoundException;
 import com.edgarchirivella.simpleissuetracker.repositories.BugRepository;
 import com.edgarchirivella.simpleissuetracker.repositories.StoryRepository;
 import org.springframework.stereotype.Service;
@@ -57,11 +58,30 @@ public class TicketServiceImpl implements TicketService {
         return story;
     }
 
+    @Override
+    public Story updateStory(Long id, String title, String description, Integer points) {
+        var nullableStory = _storyRepository.findById(id);
+
+        if (nullableStory.isEmpty()) {
+            throw new EntityNotFoundException();
+        }
+
+        var story = nullableStory.get();
+
+        story.setTitle(title);
+        story.setDescription(description);
+        story.setPoints(points);
+
+        _storyRepository.saveAndFlush(story);
+
+        return story;
+    }
+
     private String generateIssueId(String prefix) {
         var rnd = new SecureRandom();
 
         var sb = new StringBuilder(prefix);
-        
+
         for (var i = 0; i < _issueIdLength; i++) {
             sb.append(_issueIdCharset.charAt(rnd.nextInt(_issueIdCharset.length())));
         }

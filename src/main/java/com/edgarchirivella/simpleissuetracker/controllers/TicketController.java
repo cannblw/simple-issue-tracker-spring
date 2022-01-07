@@ -2,6 +2,7 @@ package com.edgarchirivella.simpleissuetracker.controllers;
 
 
 import com.edgarchirivella.simpleissuetracker.dto.actions.CreateStoryAction;
+import com.edgarchirivella.simpleissuetracker.dto.actions.UpdateStoryAction;
 import com.edgarchirivella.simpleissuetracker.dto.details.TicketDetails;
 import com.edgarchirivella.simpleissuetracker.mappers.TicketMapper;
 import com.edgarchirivella.simpleissuetracker.services.TicketService;
@@ -45,5 +46,19 @@ public class TicketController {
 
         return _ticketMapper.storyToDto(story);
     }
+
+    @PutMapping("/stories/{id}")
+    public TicketDetails updateStory(@PathVariable Long id, @RequestBody UpdateStoryAction action) {
+        log.info("Updating story with id {}", id);
+
+        var story = _ticketService.updateStory(
+                id,
+                action.getTitle(),
+                action.getDescription(),
+                action.getPoints());
+
+        return _ticketMapper.storyToDto(story);
+    }
+
 
 }
