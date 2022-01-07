@@ -8,7 +8,7 @@ import java.util.List;
 
 @Service
 public class DeveloperService {
-    private DeveloperRepository _developerRepository;
+    private final DeveloperRepository _developerRepository;
 
     public DeveloperService(DeveloperRepository developerRepository) {
         _developerRepository = developerRepository;
