@@ -1,8 +1,6 @@
 package com.edgarchirivella.simpleissuetracker.services;
 
-import com.edgarchirivella.simpleissuetracker.domain.Story;
-import com.edgarchirivella.simpleissuetracker.domain.StoryStatus;
-import com.edgarchirivella.simpleissuetracker.domain.Ticket;
+import com.edgarchirivella.simpleissuetracker.domain.*;
 import com.edgarchirivella.simpleissuetracker.exceptions.EntityNotFoundException;
 import com.edgarchirivella.simpleissuetracker.repositories.BugRepository;
 import com.edgarchirivella.simpleissuetracker.repositories.StoryRepository;
@@ -46,7 +44,7 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public Story createStory(String title, String description, Integer points) {
         var story = Story.builder()
-                .issuedId(generateIssueId(_bugIssueIdPrefix))
+                .issueId(generateIssueId(_bugIssueIdPrefix))
                 .title(title)
                 .description(description)
                 .points(points)
@@ -81,6 +79,22 @@ public class TicketServiceImpl implements TicketService {
     public void deleteStory(Long id) {
         _storyRepository.deleteById(id);
     }
+
+    @Override
+    public Bug createBug(String title, String description, BugPriority priority) {
+        var bug = Bug.builder()
+                .issueId(generateIssueId(_bugIssueIdPrefix))
+                .title(title)
+                .description(description)
+                .priority(priority)
+                .status(BugStatus.NEW)
+                .build();
+
+        _bugRepository.saveAndFlush(bug);
+
+        return bug;
+    }
+
 
     private String generateIssueId(String prefix) {
         var rnd = new SecureRandom();

@@ -1,6 +1,7 @@
 package com.edgarchirivella.simpleissuetracker.controllers;
 
 
+import com.edgarchirivella.simpleissuetracker.dto.actions.CreateBugAction;
 import com.edgarchirivella.simpleissuetracker.dto.actions.CreateStoryAction;
 import com.edgarchirivella.simpleissuetracker.dto.actions.UpdateStoryAction;
 import com.edgarchirivella.simpleissuetracker.dto.details.TicketDetails;
@@ -65,6 +66,18 @@ public class TicketController {
         log.info("Deleting story with id {}", id);
 
         _ticketService.deleteStory(id);
+    }
+
+    @PostMapping("/bugs")
+    public TicketDetails createBug(@RequestBody CreateBugAction action) {
+        log.info("Creating bug {}", action.getTitle());
+
+        var bug = _ticketService.createBug(
+                action.getTitle(),
+                action.getDescription(),
+                action.getPriority());
+
+        return _ticketMapper.bugToDto(bug);
     }
 
 

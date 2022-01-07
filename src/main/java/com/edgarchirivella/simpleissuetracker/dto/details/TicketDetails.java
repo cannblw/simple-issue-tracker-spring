@@ -12,7 +12,7 @@ public class TicketDetails {
 
     private String type;
 
-    private String issuedId;
+    private String issueId;
 
     private String title;
 

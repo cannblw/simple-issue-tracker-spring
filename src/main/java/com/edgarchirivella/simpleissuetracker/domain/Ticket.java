@@ -14,7 +14,7 @@ import javax.persistence.*;
 @MappedSuperclass
 public abstract class Ticket extends BaseEntity {
     @Column(name = "issue_id")
-    private String issuedId;
+    private String issueId;
 
     @Column(name = "title")
     private String title;

@@ -1,5 +1,7 @@
 package com.edgarchirivella.simpleissuetracker.services;
 
+import com.edgarchirivella.simpleissuetracker.domain.Bug;
+import com.edgarchirivella.simpleissuetracker.domain.BugPriority;
 import com.edgarchirivella.simpleissuetracker.domain.Story;
 import com.edgarchirivella.simpleissuetracker.domain.Ticket;
 
@@ -13,4 +15,6 @@ public interface TicketService {
     Story updateStory(Long id, String title, String description, Integer points);
 
     void deleteStory(Long id);
+
+    Bug createBug(String title, String description, BugPriority priority);
 }
