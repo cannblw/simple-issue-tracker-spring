@@ -1,14 +1,13 @@
 package com.edgarchirivella.simpleissuetracker.controllers;
 
 import com.edgarchirivella.simpleissuetracker.dto.actions.UpdateDeveloperAction;
+import com.edgarchirivella.simpleissuetracker.exceptions.EntityNotFoundException;
 import com.edgarchirivella.simpleissuetracker.mappers.DeveloperMapper;
 import com.edgarchirivella.simpleissuetracker.services.DeveloperService;
 import com.edgarchirivella.simpleissuetracker.dto.actions.CreateDeveloperAction;
 import com.edgarchirivella.simpleissuetracker.dto.details.DeveloperDetails;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -42,7 +41,7 @@ public class DeveloperController {
         var developer = _developerService.findById(id);
 
         if (developer.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            throw new EntityNotFoundException();
         }
 
         return _developerMapper.toDto(developer.get());
