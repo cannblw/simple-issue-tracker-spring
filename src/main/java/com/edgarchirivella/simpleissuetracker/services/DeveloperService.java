@@ -14,12 +14,12 @@ public class DeveloperService {
         _developerRepository = developerRepository;
     }
 
-    public List<Developer> GetAll() {
+    public List<Developer> FindAll() {
         return _developerRepository.findAll();
     }
 
     public Developer CreateDeveloper(String name) {
-        Developer developer = new Developer(name);
+        var developer = new Developer(name);
         _developerRepository.saveAndFlush(developer);
 
         return developer;

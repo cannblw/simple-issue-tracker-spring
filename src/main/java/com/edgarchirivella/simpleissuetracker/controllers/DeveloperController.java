@@ -1,6 +1,5 @@
 package com.edgarchirivella.simpleissuetracker.controllers;
 
-import com.edgarchirivella.simpleissuetracker.domain.Developer;
 import com.edgarchirivella.simpleissuetracker.mappers.DeveloperMapper;
 import com.edgarchirivella.simpleissuetracker.services.DeveloperService;
 import com.edgarchirivella.simpleissuetracker.dto.actions.CreateDeveloperAction;
@@ -24,14 +23,14 @@ public class DeveloperController {
 
     @GetMapping
     public List<DeveloperDetails> GetAll() {
-        List<Developer> developers = _developerService.GetAll();
+        var developers = _developerService.FindAll();
 
         return _developerMapper.toDto(developers);
     }
 
     @PostMapping
     public DeveloperDetails CreateDeveloper(@RequestBody CreateDeveloperAction action) {
-        Developer developer = _developerService.CreateDeveloper(action.name);
+        var developer = _developerService.CreateDeveloper(action.name);
 
         return _developerMapper.toDto(developer);
     }
