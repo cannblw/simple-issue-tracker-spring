@@ -9,6 +9,6 @@ public interface DeveloperService {
     List<Developer> findAll();
     Optional<Developer> findById(Long id);
     Developer createDeveloper(String name);
-    void DeleteDeveloper(Long id);
+    void deleteDeveloper(Long id);
     Developer updateDeveloper(Long id, String name);
 }

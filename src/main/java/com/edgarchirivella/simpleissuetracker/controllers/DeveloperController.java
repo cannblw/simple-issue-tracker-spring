@@ -44,7 +44,7 @@ public class DeveloperController {
 
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id) {
-        _developerService.DeleteDeveloper(id);
+        _developerService.deleteDeveloper(id);
     }
 
     @PutMapping("/{id}")
