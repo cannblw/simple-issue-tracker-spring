@@ -16,6 +16,11 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 @RestControllerAdvice
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<ApplicationError> handleResponseStatusException(EntityNotFoundException ex) {
+        return CreateResponseError(ErrorMessages.RESOURCE_NOT_FOUND, NOT_FOUND);
+    }
+
     @ExceptionHandler(EmptyResultDataAccessException.class)
     public ResponseEntity<ApplicationError> handleEmptyResultDataAccessException(EmptyResultDataAccessException ex) {
         return CreateResponseError(ErrorMessages.RESOURCE_NOT_FOUND, NOT_FOUND);

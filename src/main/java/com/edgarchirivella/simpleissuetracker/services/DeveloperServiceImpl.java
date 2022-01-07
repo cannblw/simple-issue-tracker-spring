@@ -1,11 +1,9 @@
 package com.edgarchirivella.simpleissuetracker.services;
 
 import com.edgarchirivella.simpleissuetracker.domain.Developer;
+import com.edgarchirivella.simpleissuetracker.exceptions.EntityNotFoundException;
 import com.edgarchirivella.simpleissuetracker.repositories.DeveloperRepository;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -46,7 +44,7 @@ public class DeveloperServiceImpl implements DeveloperService {
         var nullableDeveloper = _developerRepository.findById(id);
 
         if (nullableDeveloper.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            throw new EntityNotFoundException();
         }
 
         var developer = nullableDeveloper.get();
