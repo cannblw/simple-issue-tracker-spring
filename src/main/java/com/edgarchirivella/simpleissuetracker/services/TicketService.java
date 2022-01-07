@@ -11,4 +11,6 @@ public interface TicketService {
     Story createStory(String title, String description, Integer points);
 
     Story updateStory(Long id, String title, String description, Integer points);
+
+    void deleteStory(Long id);
 }

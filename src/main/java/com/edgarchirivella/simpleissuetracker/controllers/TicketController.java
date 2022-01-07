@@ -60,5 +60,13 @@ public class TicketController {
         return _ticketMapper.storyToDto(story);
     }
 
+    @DeleteMapping("/stories/{id}")
+    public void deleteById(@PathVariable Long id) {
+        log.info("Deleting story with id {}", id);
+
+        _ticketService.deleteStory(id);
+    }
+
+
 
 }

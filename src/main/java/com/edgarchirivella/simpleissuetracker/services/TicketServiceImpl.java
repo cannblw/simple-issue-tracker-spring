@@ -77,6 +77,11 @@ public class TicketServiceImpl implements TicketService {
         return story;
     }
 
+    @Override
+    public void deleteStory(Long id) {
+        _storyRepository.deleteById(id);
+    }
+
     private String generateIssueId(String prefix) {
         var rnd = new SecureRandom();
 
