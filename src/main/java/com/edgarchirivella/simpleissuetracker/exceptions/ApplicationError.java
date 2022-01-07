@@ -7,5 +7,5 @@ import lombok.Getter;
 @Getter
 public class ApplicationError {
     private String message;
-    private int status;
+    private Integer status;
 }
