@@ -1,5 +1,6 @@
 package com.edgarchirivella.simpleissuetracker.controllers;
 
+import com.edgarchirivella.simpleissuetracker.dto.actions.UpdateDeveloperAction;
 import com.edgarchirivella.simpleissuetracker.mappers.DeveloperMapper;
 import com.edgarchirivella.simpleissuetracker.services.DeveloperService;
 import com.edgarchirivella.simpleissuetracker.dto.actions.CreateDeveloperAction;
@@ -44,6 +45,13 @@ public class DeveloperController {
     @DeleteMapping("/{id}")
     public void DeleteById(@PathVariable Long id) {
         _developerService.DeleteDeveloper(id);
+    }
+
+    @PutMapping("/{id}")
+    public DeveloperDetails UpdateDeveloper(@RequestBody UpdateDeveloperAction action, @PathVariable Long id) {
+        var developers = _developerService.UpdateDeveloper(id, action.name);
+
+        return _developerMapper.toDto(developers);
     }
 
     @PostMapping

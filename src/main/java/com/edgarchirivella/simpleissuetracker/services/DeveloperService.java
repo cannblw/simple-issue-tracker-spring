@@ -10,4 +10,5 @@ public interface DeveloperService {
     Optional<Developer> FindById(Long id);
     Developer CreateDeveloper(String name);
     void DeleteDeveloper(Long id);
+    Developer UpdateDeveloper(Long id, String name);
 }
