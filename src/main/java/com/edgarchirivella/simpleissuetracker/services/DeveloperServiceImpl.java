@@ -19,17 +19,17 @@ public class DeveloperServiceImpl implements DeveloperService {
     }
 
     @Override
-    public List<Developer> findAll() {
+    public List<Developer> FindAll() {
         return _developerRepository.findAll();
     }
 
     @Override
-    public Optional<Developer> findById(Long id) {
+    public Optional<Developer> FindById(Long id) {
         return _developerRepository.findById(id);
     }
 
     @Override
-    public Developer createEntity(String name) {
+    public Developer CreateDeveloper(String name) {
         var developer = new Developer(name);
         _developerRepository.saveAndFlush(developer);
 
@@ -37,12 +37,12 @@ public class DeveloperServiceImpl implements DeveloperService {
     }
 
     @Override
-    public void deleteEntity(Long id) {
+    public void DeleteDeveloper(Long id) {
         _developerRepository.deleteById(id);
     }
 
     @Override
-    public Developer updateEntity(Long id, String name) {
+    public Developer UpdateDeveloper(Long id, String name) {
         var nullableDeveloper = _developerRepository.findById(id);
 
         if (nullableDeveloper.isEmpty()) {
