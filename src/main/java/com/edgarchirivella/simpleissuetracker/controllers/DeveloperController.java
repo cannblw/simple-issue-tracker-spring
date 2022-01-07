@@ -3,8 +3,8 @@ package com.edgarchirivella.simpleissuetracker.controllers;
 import com.edgarchirivella.simpleissuetracker.domain.Developer;
 import com.edgarchirivella.simpleissuetracker.mappers.DeveloperMapper;
 import com.edgarchirivella.simpleissuetracker.services.DeveloperService;
-import dto.actions.CreateDeveloperAction;
-import dto.details.DeveloperDetails;
+import com.edgarchirivella.simpleissuetracker.dto.actions.CreateDeveloperAction;
+import com.edgarchirivella.simpleissuetracker.dto.details.DeveloperDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
