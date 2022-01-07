@@ -20,5 +20,5 @@ public class Story extends Ticket {
     private StoryStatus status;
 
     @ManyToOne
-    private Developer developer;
+    private Developer assignedTo;
 }

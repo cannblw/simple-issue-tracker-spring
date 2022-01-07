@@ -24,5 +24,5 @@ public class Bug extends Ticket {
     private BugStatus status;
 
     @ManyToOne
-    private Developer developer;
+    private Developer assignedTo;
 }
