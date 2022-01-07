@@ -41,6 +41,10 @@ public class DeveloperController {
         return _developerMapper.toDto(developer.get());
     }
 
+    @DeleteMapping("/{id}")
+    public void DeleteById(@PathVariable Long id) {
+        _developerService.DeleteDeveloper(id);
+    }
 
     @PostMapping
     public DeveloperDetails CreateDeveloper(@RequestBody CreateDeveloperAction action) {
