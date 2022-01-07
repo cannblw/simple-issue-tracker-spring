@@ -49,14 +49,14 @@ public class DeveloperController {
 
     @PutMapping("/{id}")
     public DeveloperDetails updateDeveloper(@RequestBody UpdateDeveloperAction action, @PathVariable Long id) {
-        var developers = _developerService.updateDeveloper(id, action.name);
+        var developers = _developerService.updateDeveloper(id, action.getName());
 
         return _developerMapper.toDto(developers);
     }
 
     @PostMapping
     public DeveloperDetails createDeveloper(@RequestBody CreateDeveloperAction action) {
-        var developer = _developerService.createDeveloper(action.name);
+        var developer = _developerService.createDeveloper(action.getName());
 
         return _developerMapper.toDto(developer);
     }

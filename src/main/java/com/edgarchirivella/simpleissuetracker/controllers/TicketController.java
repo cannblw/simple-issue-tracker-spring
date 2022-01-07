@@ -1,6 +1,7 @@
 package com.edgarchirivella.simpleissuetracker.controllers;
 
 
+import com.edgarchirivella.simpleissuetracker.dto.actions.CreateStoryAction;
 import com.edgarchirivella.simpleissuetracker.dto.details.TicketDetails;
 import com.edgarchirivella.simpleissuetracker.mappers.TicketMapper;
 import com.edgarchirivella.simpleissuetracker.services.TicketService;
@@ -27,6 +28,16 @@ public class TicketController {
         var tickets = _ticketService.findAll();
 
         return _ticketMapper.ticketToDto(tickets);
+    }
+
+    @PostMapping("/stories")
+    public TicketDetails createStory(@RequestBody CreateStoryAction action) {
+        var story = _ticketService.createStory(
+                action.getTitle(),
+                action.getDescription(),
+                action.getPoints());
+
+        return _ticketMapper.storyToDto(story);
     }
 
 }

@@ -5,6 +5,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UpdateDeveloperAction {
-    private String name;
+public class CreateStoryAction {
+    private String title;
+
+    private String description;
+
+    private Integer points;
 }

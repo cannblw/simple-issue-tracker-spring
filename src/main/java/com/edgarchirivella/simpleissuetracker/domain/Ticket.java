@@ -24,4 +24,7 @@ public abstract class Ticket extends BaseEntity {
 
     @ManyToOne
     private Developer assignedTo;
+
+    @Transient
+    private TicketType type;
 }
