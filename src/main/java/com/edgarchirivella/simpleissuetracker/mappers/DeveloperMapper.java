@@ -1,14 +1,15 @@
 package com.edgarchirivella.simpleissuetracker.mappers;
 
 import com.edgarchirivella.simpleissuetracker.domain.Developer;
-import dto.details.DeveloperDetails;
+import com.edgarchirivella.simpleissuetracker.dto.details.DeveloperDetails;
 import org.mapstruct.Mapper;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper
+@Component
 public interface DeveloperMapper {
-    Developer toEntity(DeveloperDetails source);
     DeveloperDetails toDto(Developer target);
     List<DeveloperDetails> toDto(List<Developer> target);
 }
