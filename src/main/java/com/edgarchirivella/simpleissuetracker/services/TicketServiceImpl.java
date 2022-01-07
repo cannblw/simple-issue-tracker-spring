@@ -44,7 +44,7 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public Story createStory(String title, String description, Integer points) {
         var story = Story.builder()
-                .issueId(generateIssueId(_bugIssueIdPrefix))
+                .issueId(generateIssueId(_storyIssueIdPrefix))
                 .title(title)
                 .description(description)
                 .points(points)
