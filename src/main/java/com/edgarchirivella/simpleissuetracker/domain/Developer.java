@@ -14,7 +14,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "developers")
 public class Developer extends BaseEntity {
-    @Column(name = "name")
     private String name;
 
     public Developer(String name) {
