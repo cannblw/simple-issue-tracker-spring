@@ -19,4 +19,6 @@ public interface TicketService {
     Bug createBug(String title, String description, BugPriority priority);
 
     Bug updateBug(Long id, String title, String description, BugPriority priority);
+
+    void deleteBug(Long id);
 }

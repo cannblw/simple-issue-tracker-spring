@@ -114,6 +114,10 @@ public class TicketServiceImpl implements TicketService {
         return bug;
     }
 
+    @Override
+    public void deleteBug(Long id) {
+        _bugRepository.deleteById(id);
+    }
 
     private String generateIssueId(String prefix) {
         var rnd = new SecureRandom();

@@ -63,7 +63,7 @@ public class TicketController {
     }
 
     @DeleteMapping("/stories/{id}")
-    public void deleteById(@PathVariable Long id) {
+    public void deleteStoryById(@PathVariable Long id) {
         log.info("Deleting story with id {}", id);
 
         _ticketService.deleteStory(id);
@@ -92,6 +92,13 @@ public class TicketController {
                 action.getPriority());
 
         return _ticketMapper.bugToDto(bug);
+    }
+
+    @DeleteMapping("/bugs/{id}")
+    public void deleteBugById(@PathVariable Long id) {
+        log.info("Deleting bug with id {}", id);
+
+        _ticketService.deleteBug(id);
     }
 
 }
