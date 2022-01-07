@@ -3,6 +3,7 @@ package com.edgarchirivella.simpleissuetracker.controllers;
 
 import com.edgarchirivella.simpleissuetracker.dto.actions.CreateBugAction;
 import com.edgarchirivella.simpleissuetracker.dto.actions.CreateStoryAction;
+import com.edgarchirivella.simpleissuetracker.dto.actions.UpdateBugAction;
 import com.edgarchirivella.simpleissuetracker.dto.actions.UpdateStoryAction;
 import com.edgarchirivella.simpleissuetracker.dto.details.TicketDetails;
 import com.edgarchirivella.simpleissuetracker.mappers.TicketMapper;
@@ -80,6 +81,17 @@ public class TicketController {
         return _ticketMapper.bugToDto(bug);
     }
 
+    @PutMapping("/bugs/{id}")
+    public TicketDetails updateBug(@PathVariable Long id, @RequestBody UpdateBugAction action) {
+        log.info("Updating bug with id {}", id);
 
+        var bug = _ticketService.updateBug(
+                id,
+                action.getTitle(),
+                action.getDescription(),
+                action.getPriority());
+
+        return _ticketMapper.bugToDto(bug);
+    }
 
 }

@@ -95,6 +95,25 @@ public class TicketServiceImpl implements TicketService {
         return bug;
     }
 
+    @Override
+    public Bug updateBug(Long id, String title, String description, BugPriority priority) {
+        var nullableBug = _bugRepository.findById(id);
+
+        if (nullableBug.isEmpty()) {
+            throw new EntityNotFoundException();
+        }
+
+        var bug = nullableBug.get();
+
+        bug.setTitle(title);
+        bug.setDescription(description);
+        bug.setPriority(priority);
+
+        _bugRepository.saveAndFlush(bug);
+
+        return bug;
+    }
+
 
     private String generateIssueId(String prefix) {
         var rnd = new SecureRandom();
