@@ -22,7 +22,4 @@ public class Bug extends Ticket {
 
     @Column(name = "status")
     private BugStatus status;
-
-    @ManyToOne
-    private Developer assignedTo;
 }

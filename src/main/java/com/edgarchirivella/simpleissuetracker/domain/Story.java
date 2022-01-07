@@ -18,7 +18,4 @@ public class Story extends Ticket {
 
     @Column(name = "status")
     private StoryStatus status;
-
-    @ManyToOne
-    private Developer assignedTo;
 }

@@ -21,4 +21,7 @@ public abstract class Ticket extends BaseEntity {
 
     @Column(name = "description")
     private String description;
+
+    @ManyToOne
+    private Developer assignedTo;
 }
