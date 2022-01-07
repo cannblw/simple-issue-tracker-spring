@@ -1,6 +1,7 @@
 package com.edgarchirivella.simpleissuetracker.domain;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
@@ -11,6 +12,7 @@ import javax.persistence.Table;
 @Setter
 @Getter
 @SuperBuilder
+@NoArgsConstructor
 @Entity
 @Table(name = "bugs")
 public class Bug extends Ticket {
