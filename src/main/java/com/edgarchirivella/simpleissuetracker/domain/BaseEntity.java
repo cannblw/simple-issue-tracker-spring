@@ -13,12 +13,15 @@ import java.util.Date;
 @SuperBuilder
 @NoArgsConstructor
 @MappedSuperclass
-abstract public class BaseEntity {
+public abstract class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "created_at")
     private Date createdAt;
+
+    @Column(name = "updated_at")
     private Date updatedAt;
 
     @PrePersist
