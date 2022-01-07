@@ -10,7 +10,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("ticket")
+@RequestMapping("tickets")
 public class TicketController {
     private final TicketService _ticketService;
     private final TicketMapper _ticketMapper;
