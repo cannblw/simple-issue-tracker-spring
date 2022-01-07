@@ -19,17 +19,17 @@ public class DeveloperServiceImpl implements DeveloperService {
     }
 
     @Override
-    public List<Developer> FindAll() {
+    public List<Developer> findAll() {
         return _developerRepository.findAll();
     }
 
     @Override
-    public Optional<Developer> FindById(Long id) {
+    public Optional<Developer> findById(Long id) {
         return _developerRepository.findById(id);
     }
 
     @Override
-    public Developer CreateDeveloper(String name) {
+    public Developer createDeveloper(String name) {
         var developer = new Developer(name);
         _developerRepository.saveAndFlush(developer);
 
@@ -42,7 +42,7 @@ public class DeveloperServiceImpl implements DeveloperService {
     }
 
     @Override
-    public Developer UpdateDeveloper(Long id, String name) {
+    public Developer updateDeveloper(Long id, String name) {
         var nullableDeveloper = _developerRepository.findById(id);
 
         if (nullableDeveloper.isEmpty()) {

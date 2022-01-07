@@ -25,15 +25,15 @@ public class DeveloperController {
     }
 
     @GetMapping
-    public List<DeveloperDetails> GetAll() {
-        var developers = _developerService.FindAll();
+    public List<DeveloperDetails> getAll() {
+        var developers = _developerService.findAll();
 
         return _developerMapper.toDto(developers);
     }
 
     @GetMapping("/{id}")
-    public DeveloperDetails GetById(@PathVariable Long id) {
-        var developer = _developerService.FindById(id);
+    public DeveloperDetails getById(@PathVariable Long id) {
+        var developer = _developerService.findById(id);
 
         if (developer.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -43,20 +43,20 @@ public class DeveloperController {
     }
 
     @DeleteMapping("/{id}")
-    public void DeleteById(@PathVariable Long id) {
+    public void deleteById(@PathVariable Long id) {
         _developerService.DeleteDeveloper(id);
     }
 
     @PutMapping("/{id}")
-    public DeveloperDetails UpdateDeveloper(@RequestBody UpdateDeveloperAction action, @PathVariable Long id) {
-        var developers = _developerService.UpdateDeveloper(id, action.name);
+    public DeveloperDetails updateDeveloper(@RequestBody UpdateDeveloperAction action, @PathVariable Long id) {
+        var developers = _developerService.updateDeveloper(id, action.name);
 
         return _developerMapper.toDto(developers);
     }
 
     @PostMapping
-    public DeveloperDetails CreateDeveloper(@RequestBody CreateDeveloperAction action) {
-        var developer = _developerService.CreateDeveloper(action.name);
+    public DeveloperDetails createDeveloper(@RequestBody CreateDeveloperAction action) {
+        var developer = _developerService.createDeveloper(action.name);
 
         return _developerMapper.toDto(developer);
     }
