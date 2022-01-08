@@ -3,10 +3,11 @@ package com.edgarchirivella.simpleissuetracker.mappers;
 import com.edgarchirivella.simpleissuetracker.domain.Bug;
 import com.edgarchirivella.simpleissuetracker.domain.Story;
 import com.edgarchirivella.simpleissuetracker.domain.Ticket;
+import com.edgarchirivella.simpleissuetracker.domain.TicketType;
+import com.edgarchirivella.simpleissuetracker.dto.details.BugDetails;
+import com.edgarchirivella.simpleissuetracker.dto.details.StoryDetails;
 import com.edgarchirivella.simpleissuetracker.dto.details.TicketDetails;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
+import org.mapstruct.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -15,17 +16,29 @@ import java.util.List;
 @Component
 public interface TicketMapper {
     @Mapping(source = "assignedTo.name", target = "assignedTo")
-    TicketDetails storyToDto(Story target);
+    StoryDetails storyToDto(Story target);
 
     @Mapping(source = "assignedTo.name", target = "assignedTo")
-    TicketDetails bugToDto(Bug target);
+    BugDetails bugToDto(Bug target);
 
-    @Mapping(source = "assignedTo.name", target = "assignedTo")
-    TicketDetails ticketToDto(Ticket target);
+    default TicketDetails ticketToDto(Ticket source) {
+        if (source instanceof Story) {
+            return storyToDto((Story)source);
+        } else if (source instanceof Bug) {
+            return bugToDto((Bug)source);
+        } else {
+            throw new RuntimeException("Cannot");
+        }
+    }
 
-    List<TicketDetails> storyToDto(List<Story> target);
-
-    List<TicketDetails> bugToDto(List<Bug> target);
+    @AfterMapping
+    default void setType(Ticket ticket, @MappingTarget TicketDetails ticketDetails) {
+        if (ticket instanceof Story) {
+            ticketDetails.setType(TicketType.STORY.toString());
+        } else if (ticket instanceof Bug) {
+            ticketDetails.setType(TicketType.BUG.toString());
+        }
+    }
 
     List<TicketDetails> ticketToDto(List<Ticket> target);
 }
