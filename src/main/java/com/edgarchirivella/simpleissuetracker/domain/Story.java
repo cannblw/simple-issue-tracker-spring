@@ -14,6 +14,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "stories")
 public class Story extends Ticket {
+    @Column(name = "points")
     private Integer points;
 
     @Column(name = "status")

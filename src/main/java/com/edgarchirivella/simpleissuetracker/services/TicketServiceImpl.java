@@ -2,13 +2,19 @@ package com.edgarchirivella.simpleissuetracker.services;
 
 import com.edgarchirivella.simpleissuetracker.domain.*;
 import com.edgarchirivella.simpleissuetracker.exceptions.EntityNotFoundException;
+import com.edgarchirivella.simpleissuetracker.exceptions.TeamCapacityExceededException;
 import com.edgarchirivella.simpleissuetracker.repositories.BugRepository;
 import com.edgarchirivella.simpleissuetracker.repositories.DeveloperRepository;
 import com.edgarchirivella.simpleissuetracker.repositories.StoryRepository;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -17,10 +23,13 @@ public class TicketServiceImpl implements TicketService {
     // These could go in application.properties, but let's leave them here now
     private static final String _bugIssueIdPrefix = "BUG-";
     private static final String _storyIssueIdPrefix = "STORY-";
+    private static final Integer _developerCapacity = 10;
 
     private final StoryRepository _storyRepository;
     private final BugRepository _bugRepository;
     private final DeveloperRepository _developerRepository;
+    @PersistenceContext
+    private EntityManager _entityManager;
 
     public TicketServiceImpl(
             StoryRepository storyRepository,
@@ -74,7 +83,7 @@ public class TicketServiceImpl implements TicketService {
         story.setDescription(description);
         story.setPoints(points);
 
-        // Should probably add an endpoint to estimate stories, but for now we'll use this
+        // TODO: Generate this status based in story points inside of model
         if (points == null) {
             story.setStatus(StoryStatus.NEW);
         } else {
@@ -169,5 +178,55 @@ public class TicketServiceImpl implements TicketService {
         }
 
         return ticket;
+    }
+
+    public List<List<Story>> getPlanning() {
+        generateTestData();
+        var teamCapacity = _developerCapacity * _developerRepository.count();
+
+        // Load them in memory because the backlog of estimated tickets SHOULD not be too big
+        var stories = _storyRepository.findByStatusOrderByPointsDesc(StoryStatus.ESTIMATED);
+
+        List<List<Story>> planning = new ArrayList<List<Story>>();
+
+        var currentWeek = new ArrayList<Story>();
+        var currentWeekPoints = 0;
+
+        for (var story : stories) {
+            if (story.getPoints() > teamCapacity) throw new TeamCapacityExceededException();
+
+            if (currentWeekPoints + story.getPoints() <= teamCapacity) {
+                currentWeek.add(story);
+                currentWeekPoints += story.getPoints();
+            } else {
+                planning.add(currentWeek);
+                currentWeek = new ArrayList<Story>(Arrays.asList(story));
+                currentWeekPoints = story.getPoints();
+            }
+        }
+
+        return planning;
+    }
+
+    private void generateTestData() {
+        if (_developerRepository.count() == 0) {
+            _developerRepository.save(new Developer("Name"));
+            _developerRepository.save(new Developer("Name2"));
+            _developerRepository.flush();
+        }
+
+        if (_storyRepository.count() == 0) {
+            for (var i = 0; i < 100; i++) {
+                _storyRepository.save(
+                        Story.builder()
+                                .title("Title")
+                                .description("Description")
+                                .status(StoryStatus.ESTIMATED)
+                                .points(ThreadLocalRandom.current().nextInt(1, 20 + 1))
+                                .build()
+                );
+            }
+            _storyRepository.flush();
+        }
     }
 }

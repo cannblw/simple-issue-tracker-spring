@@ -26,5 +26,5 @@ public interface TicketService {
 
     Bug assignBugToDeveloper(Long storyId, Long developerId);
 
-    List<Story> getPlanning();
+    List<List<Story>> getPlanning();
 }

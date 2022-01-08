@@ -125,11 +125,11 @@ public class TicketController {
     }
 
     @GetMapping("/plan")
-    public List<StoryDetails> plan() {
+    public List<List<StoryDetails>> plan() {
         log.info("Planning sprint");
 
         var planning = _ticketService.getPlanning();
 
-        return _ticketMapper.storyToDto(planning);
+        return _ticketMapper.planningToDto(planning);
     }
 }

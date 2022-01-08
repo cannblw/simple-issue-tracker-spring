@@ -23,6 +23,8 @@ public interface TicketMapper {
 
     List<StoryDetails> storyToDto(List<Story> target);
 
+    List<List<StoryDetails>> planningToDto(List<List<Story>> target);
+
     default TicketDetails ticketToDto(Ticket source) {
         if (source instanceof Story) {
             return storyToDto((Story)source);

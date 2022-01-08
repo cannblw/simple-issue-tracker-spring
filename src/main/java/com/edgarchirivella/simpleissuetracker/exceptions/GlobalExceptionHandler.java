@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.*;
 
 @RestControllerAdvice
 @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -19,6 +19,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<ApplicationError> handleResponseStatusException(EntityNotFoundException ex) {
         return CreateResponseError(ErrorMessages.RESOURCE_NOT_FOUND, NOT_FOUND);
+    }
+
+    @ExceptionHandler(TeamCapacityExceededException.class)
+    public ResponseEntity<ApplicationError> handleTeamCapacityExceededException(TeamCapacityExceededException ex) {
+        return CreateResponseError(ErrorMessages.TEAM_CAPACITY_EXCEEDED, BAD_REQUEST);
     }
 
     @ExceptionHandler(EmptyResultDataAccessException.class)

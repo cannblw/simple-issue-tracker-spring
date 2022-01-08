@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface StoryRepository extends JpaRepository<Story, Long> {
-    List<Story> findByStatusOrderByPoints(StoryStatus status);
+    List<Story> findByStatusOrderByPointsDesc(StoryStatus status);
 }
