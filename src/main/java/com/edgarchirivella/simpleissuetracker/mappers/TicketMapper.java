@@ -14,19 +14,13 @@ import java.util.List;
 @Mapper
 @Component
 public interface TicketMapper {
-    @Mappings({
-        @Mapping(source = "assignedTo.name", target = "assignedTo")
-    })
+    @Mapping(source = "assignedTo.name", target = "assignedTo")
     TicketDetails storyToDto(Story target);
 
-    @Mappings({
-        @Mapping(source = "assignedTo.name", target = "assignedTo")
-    })
+    @Mapping(source = "assignedTo.name", target = "assignedTo")
     TicketDetails bugToDto(Bug target);
 
-    @Mappings({
-        @Mapping(source = "assignedTo.name", target = "assignedTo")
-    })
+    @Mapping(source = "assignedTo.name", target = "assignedTo")
     TicketDetails ticketToDto(Ticket target);
 
     List<TicketDetails> storyToDto(List<Story> target);
