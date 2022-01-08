@@ -49,7 +49,6 @@ public class TicketServiceImpl implements TicketService {
                 .title(title)
                 .description(description)
                 .points(points)
-                // Should probably add an endpoint to estimate stories, but for now we'll use the updateStory endpoint for that
                 .status(points == null ? StoryStatus.NEW : StoryStatus.ESTIMATED)
                 .build();
 
@@ -75,6 +74,7 @@ public class TicketServiceImpl implements TicketService {
         story.setDescription(description);
         story.setPoints(points);
 
+        // Should probably add an endpoint to estimate stories, but for now we'll use this
         if (points == null) {
             story.setStatus(StoryStatus.NEW);
         } else {
