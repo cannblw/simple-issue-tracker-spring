@@ -2,6 +2,8 @@ package com.edgarchirivella.simpleissuetracker.dto.details;
 
 import lombok.*;
 
+import java.util.Date;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -17,4 +19,8 @@ public class TicketDetails {
     private String assignedTo;
 
     private String type;
+
+    private Date createdAt;
+
+    private Date updatedAt;
 }
