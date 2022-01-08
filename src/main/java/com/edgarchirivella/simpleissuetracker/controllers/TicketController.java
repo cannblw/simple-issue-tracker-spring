@@ -69,6 +69,17 @@ public class TicketController {
         _ticketService.deleteStory(id);
     }
 
+    @PostMapping("/stories/{id}/assign/{developerId}")
+    public TicketDetails assignStoryToDeveloper(@PathVariable("id") Long storyId, @PathVariable Long developerId) {
+        log.info("Assigning story {} to developer {}", storyId, developerId);
+
+        var story = _ticketService.assignStoryToDeveloper(
+                storyId,
+                developerId);
+
+        return _ticketMapper.storyToDto(story);
+    }
+
     @PostMapping("/bugs")
     public TicketDetails createBug(@RequestBody CreateBugAction action) {
         log.info("Creating bug {}", action.getTitle());
@@ -101,4 +112,14 @@ public class TicketController {
         _ticketService.deleteBug(id);
     }
 
+    @PostMapping("/bugs/{id}/assign/{developerId}")
+    public TicketDetails assignBugToDeveloper(@PathVariable("id") Long bugId, @PathVariable Long developerId) {
+        log.info("Assigning bug {} to developer {}", bugId, developerId);
+
+        var bug = _ticketService.assignBugToDeveloper(
+                bugId,
+                developerId);
+
+        return _ticketMapper.bugToDto(bug);
+    }
 }

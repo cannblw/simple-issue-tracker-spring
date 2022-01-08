@@ -21,4 +21,8 @@ public interface TicketService {
     Bug updateBug(Long id, String title, String description, BugPriority priority);
 
     void deleteBug(Long id);
+
+    Story assignStoryToDeveloper(Long storyId, Long developerId);
+
+    Bug assignBugToDeveloper(Long storyId, Long developerId);
 }
