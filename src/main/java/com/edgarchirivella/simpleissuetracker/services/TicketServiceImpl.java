@@ -181,6 +181,28 @@ public class TicketServiceImpl implements TicketService {
     }
 
     public List<List<Story>> getPlanning() {
+        /*
+         * NOTE: This algorithm is pretty rudimentary. It does the job, but it's far from being the optimal solution.
+         *       I can't dedicate more time to this project, however, I will explain how it could be improved.
+         *
+         * Let's define our team capacity as 20 in all the following examples, and let's imagine that we have
+         * 100 stories with the points going from 1 to 20.
+         *
+         * 1) The easiest way to improve this would be to group big story points numbers with smaller ones.
+         *    After using this algorithm, we have some weeks with only a 20 points ticket filling the week. After that,
+         *    we have some weeks with 19 points, etc. And at the end of the list, the weeks have many 1 point stories.
+         *    We could move these small stories to weeks with more points. For example:
+         *        Week 1: 20
+         *        Week 2: 19 + 1
+         *        Week 2: 16 + 1 + 2 + 1
+         *
+         * 2) Find the complement: We iterate the list and start a week with the first story. For example,
+         *    we find a story with 17 points. The complement will be 20 - 17 = 3. If we have another ticket in the list
+         *    with 3 story points, we can create a week with both. If we don't, we can try to find other tickets where
+         *    story1.getPoints() + story2.getPoints() == 3. Using this, we could find a story with 2 points
+         *    and another one with 1 (2 + 1 = 3). So our week could be 17 + 2 + 1 = 20.
+         */
+
         var teamCapacity = _developerCapacity * _developerRepository.count();
 
         if (teamCapacity == 0) {
