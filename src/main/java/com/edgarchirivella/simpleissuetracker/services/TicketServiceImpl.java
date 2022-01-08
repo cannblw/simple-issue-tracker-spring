@@ -6,7 +6,6 @@ import com.edgarchirivella.simpleissuetracker.repositories.BugRepository;
 import com.edgarchirivella.simpleissuetracker.repositories.StoryRepository;
 import org.springframework.stereotype.Service;
 
-import java.security.SecureRandom;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -14,8 +13,6 @@ import java.util.stream.Stream;
 @Service
 public class TicketServiceImpl implements TicketService {
     // These could go in application.properties, but let's leave them here now
-    private static final Integer _issueIdLength = 5;
-    private static final String _issueIdCharset = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     private static final String _bugIssueIdPrefix = "BUG-";
     private static final String _storyIssueIdPrefix = "STORY-";
 
@@ -44,13 +41,15 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public Story createStory(String title, String description, Integer points) {
         var story = Story.builder()
-                .issueId(generateIssueId(_storyIssueIdPrefix))
                 .title(title)
                 .description(description)
                 .points(points)
                 .status(StoryStatus.NEW)
                 .build();
 
+        _storyRepository.saveAndFlush(story);
+
+        story.setIssueId(_storyIssueIdPrefix + story.getId());
         _storyRepository.saveAndFlush(story);
 
         return story;
@@ -83,13 +82,15 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public Bug createBug(String title, String description, BugPriority priority) {
         var bug = Bug.builder()
-                .issueId(generateIssueId(_bugIssueIdPrefix))
                 .title(title)
                 .description(description)
                 .priority(priority)
                 .status(BugStatus.NEW)
                 .build();
 
+        _bugRepository.saveAndFlush(bug);
+
+        bug.setIssueId(_bugIssueIdPrefix + bug.getId());
         _bugRepository.saveAndFlush(bug);
 
         return bug;
@@ -117,17 +118,5 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public void deleteBug(Long id) {
         _bugRepository.deleteById(id);
-    }
-
-    private String generateIssueId(String prefix) {
-        var rnd = new SecureRandom();
-
-        var sb = new StringBuilder(prefix);
-
-        for (var i = 0; i < _issueIdLength; i++) {
-            sb.append(_issueIdCharset.charAt(rnd.nextInt(_issueIdCharset.length())));
-        }
-
-        return sb.toString();
     }
 }
