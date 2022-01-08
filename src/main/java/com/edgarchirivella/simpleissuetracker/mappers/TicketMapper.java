@@ -21,6 +21,8 @@ public interface TicketMapper {
     @Mapping(source = "assignedTo.name", target = "assignedTo")
     BugDetails bugToDto(Bug target);
 
+    List<StoryDetails> storyToDto(List<Story> target);
+
     default TicketDetails ticketToDto(Ticket source) {
         if (source instanceof Story) {
             return storyToDto((Story)source);

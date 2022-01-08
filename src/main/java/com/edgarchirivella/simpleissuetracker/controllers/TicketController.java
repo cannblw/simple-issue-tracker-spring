@@ -5,6 +5,7 @@ import com.edgarchirivella.simpleissuetracker.dto.actions.CreateBugAction;
 import com.edgarchirivella.simpleissuetracker.dto.actions.CreateStoryAction;
 import com.edgarchirivella.simpleissuetracker.dto.actions.UpdateBugAction;
 import com.edgarchirivella.simpleissuetracker.dto.actions.UpdateStoryAction;
+import com.edgarchirivella.simpleissuetracker.dto.details.StoryDetails;
 import com.edgarchirivella.simpleissuetracker.dto.details.TicketDetails;
 import com.edgarchirivella.simpleissuetracker.mappers.TicketMapper;
 import com.edgarchirivella.simpleissuetracker.services.TicketService;
@@ -121,5 +122,14 @@ public class TicketController {
                 developerId);
 
         return _ticketMapper.bugToDto(bug);
+    }
+
+    @GetMapping("/plan")
+    public List<StoryDetails> plan() {
+        log.info("Planning sprint");
+
+        var planning = _ticketService.getPlanning();
+
+        return _ticketMapper.storyToDto(planning);
     }
 }
