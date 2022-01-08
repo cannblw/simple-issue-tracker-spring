@@ -181,8 +181,11 @@ public class TicketServiceImpl implements TicketService {
     }
 
     public List<List<Story>> getPlanning() {
-        generateTestData();
         var teamCapacity = _developerCapacity * _developerRepository.count();
+
+        if (teamCapacity == 0) {
+            throw new TeamCapacityExceededException();
+        }
 
         // Load them in memory because the backlog of estimated tickets SHOULD not be too big
         var stories = _storyRepository.findByStatusOrderByPointsDesc(StoryStatus.ESTIMATED);
@@ -206,27 +209,5 @@ public class TicketServiceImpl implements TicketService {
         }
 
         return planning;
-    }
-
-    private void generateTestData() {
-        if (_developerRepository.count() == 0) {
-            _developerRepository.save(new Developer("Name"));
-            _developerRepository.save(new Developer("Name2"));
-            _developerRepository.flush();
-        }
-
-        if (_storyRepository.count() == 0) {
-            for (var i = 0; i < 100; i++) {
-                _storyRepository.save(
-                        Story.builder()
-                                .title("Title")
-                                .description("Description")
-                                .status(StoryStatus.ESTIMATED)
-                                .points(ThreadLocalRandom.current().nextInt(1, 20 + 1))
-                                .build()
-                );
-            }
-            _storyRepository.flush();
-        }
     }
 }
