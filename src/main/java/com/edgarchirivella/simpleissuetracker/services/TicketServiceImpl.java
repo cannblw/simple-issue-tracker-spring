@@ -57,9 +57,9 @@ public class TicketServiceImpl implements TicketService {
         var story = Story.builder()
                 .title(title)
                 .description(description)
-                .points(points)
-                .status(points == null ? StoryStatus.NEW : StoryStatus.ESTIMATED)
                 .build();
+
+        story.setPoints(points);
 
         _storyRepository.saveAndFlush(story);
 
@@ -82,13 +82,6 @@ public class TicketServiceImpl implements TicketService {
         story.setTitle(title);
         story.setDescription(description);
         story.setPoints(points);
-
-        // TODO: Generate this status based in story points inside of model
-        if (points == null) {
-            story.setStatus(StoryStatus.NEW);
-        } else {
-            story.setStatus(StoryStatus.ESTIMATED);
-        }
 
         _storyRepository.saveAndFlush(story);
 
@@ -212,7 +205,7 @@ public class TicketServiceImpl implements TicketService {
         // Load them in memory because the backlog of estimated tickets SHOULD not be too big
         var stories = _storyRepository.findByStatusOrderByPointsDesc(StoryStatus.ESTIMATED);
 
-        List<List<Story>> planning = new ArrayList<List<Story>>();
+        List<List<Story>> planning = new ArrayList<>();
 
         var currentWeek = new ArrayList<Story>();
         var currentWeekPoints = 0;
