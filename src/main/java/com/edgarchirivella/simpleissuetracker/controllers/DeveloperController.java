@@ -9,6 +9,7 @@ import com.edgarchirivella.simpleissuetracker.dto.details.DeveloperDetails;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
@@ -64,7 +65,7 @@ public class DeveloperController {
     }
 
     @PostMapping
-    public DeveloperDetails createDeveloper(@RequestBody CreateDeveloperAction action) {
+    public DeveloperDetails createDeveloper(@Valid @RequestBody CreateDeveloperAction action) {
         log.info("Creating developer {}", action.getName());
 
         var developer = _developerService.createDeveloper(action.getName());

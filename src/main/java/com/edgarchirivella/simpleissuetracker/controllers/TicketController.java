@@ -12,6 +12,7 @@ import com.edgarchirivella.simpleissuetracker.services.TicketService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -39,7 +40,7 @@ public class TicketController {
     }
 
     @PostMapping("/stories")
-    public TicketDetails createStory(@RequestBody CreateStoryAction action) {
+    public TicketDetails createStory(@Valid @RequestBody CreateStoryAction action) {
         log.info("Creating story {}", action.getTitle());
 
         var story = _ticketService.createStory(
@@ -82,7 +83,7 @@ public class TicketController {
     }
 
     @PostMapping("/bugs")
-    public TicketDetails createBug(@RequestBody CreateBugAction action) {
+    public TicketDetails createBug(@Valid @RequestBody CreateBugAction action) {
         log.info("Creating bug {}", action.getTitle());
 
         var bug = _ticketService.createBug(
