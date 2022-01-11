@@ -11,7 +11,6 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Getter
-@SuperBuilder
 @NoArgsConstructor
 @Entity
 @Table(name = "stories")
@@ -22,6 +21,12 @@ public class Story extends Ticket {
     @Column(name = "status")
     @Setter(AccessLevel.NONE)
     private StoryStatus status;
+
+    public Story(String title, String description, Integer points) {
+        this.title = title;
+        this.description = description;
+        setPoints(points);
+    }
 
     public void setPoints(Integer points) {
         this.points = points;

@@ -14,14 +14,14 @@ import javax.persistence.*;
 @MappedSuperclass
 public abstract class Ticket extends BaseEntity {
     @Column(name = "issue_id")
-    private String issueId;
+    protected String issueId;
 
     @Column(name = "title")
-    private String title;
+    protected String title;
 
     @Column(name = "description")
-    private String description;
+    protected String description;
 
     @ManyToOne
-    private Developer assignedTo;
+    protected Developer assignedTo;
 }

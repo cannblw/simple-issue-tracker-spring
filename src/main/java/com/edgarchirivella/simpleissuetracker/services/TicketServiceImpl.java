@@ -54,12 +54,7 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public Story createStory(String title, String description, Integer points) {
-        var story = Story.builder()
-                .title(title)
-                .description(description)
-                .build();
-
-        story.setPoints(points);
+        var story = new Story(title, description, points);
 
         _storyRepository.saveAndFlush(story);
 
@@ -95,12 +90,7 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public Bug createBug(String title, String description, BugPriority priority) {
-        var bug = Bug.builder()
-                .title(title)
-                .description(description)
-                .priority(priority)
-                .status(BugStatus.NEW)
-                .build();
+        var bug = new Bug(title, description, priority);
 
         _bugRepository.saveAndFlush(bug);
 

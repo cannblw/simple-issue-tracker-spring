@@ -11,7 +11,6 @@ import javax.persistence.Table;
 
 @Setter
 @Getter
-@SuperBuilder
 @NoArgsConstructor
 @Entity
 @Table(name = "bugs")
@@ -21,4 +20,11 @@ public class Bug extends Ticket {
 
     @Column(name = "status")
     private BugStatus status;
+
+    public Bug(String title, String description, BugPriority priority) {
+        this.title = title;
+        this.description = description;
+        this.priority = priority;
+        this.status = BugStatus.NEW;
+    }
 }
